@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <h2>I'm extending the base template!</h2>
-
     {% for cocktail in cocktails %}
         {{ cocktail.cocktail_name }}<br>
         {{ cocktail.category_name }}<br>
