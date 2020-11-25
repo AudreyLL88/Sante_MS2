@@ -1,27 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
 
-    {% for cocktail in cocktails %}
-        {{ cocktail.cocktail_name }}<br>
-        {{ cocktail.category_name }}<br>
-        {{ cocktail.cocktail_description }}<br>
-        {{ cocktail.cocktail_status }}<br>
-        {{ cocktail.cocktail_date }}<br>
-    {% endfor %}
-
     <ul class="collapsible">
+        {% for cocktail in cocktails %}
         <li>
-            <div class="collapsible-header white-text amber darken-4 text-shadow"><i class="fas fa-caret-down"></i>First</div>
-            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            <div class="collapsible-header white-text amber darken-4 text-shadow">
+                <i class="fas fa-caret-down"></i>
+                <strong>{{ cocktail.cocktail_name }}</strong> : {{ cocktail.cocktail_date }}
+                {% if cocktail.cocktail_status == "on" %}
+                    <i class="fas fa-exclamation circle amber-text lighten-2 tooltipped"
+                        data-position="bottom" data-tooltip="URGENT"></i>
+                {% endif %}
+            </div>
+            <div class="collapsible-body">
+                <strong>{{ cocktail.category_name }}</strong>
+                <p>{{ cocktail.cocktail_description }}</p>
+            </div>
         </li>
-        <li>
-            <div class="collapsible-header white-text amber darken-4 text-shadow"><i class="fas fa-caret-down"></i>Second</div>
-            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-        </li>
-        <li>
-            <div class="collapsible-header white-text amber darken-4 text-shadow"><i class="fas fa-caret-down"></i>Third</div>
-            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-        </li>
+        {% endfor %}
   </ul>
         
 
