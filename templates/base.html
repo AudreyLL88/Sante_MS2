@@ -25,21 +25,21 @@
 					<li><a href="#">Cocktails</a></li>
 					<li><a href="#">Log Out</a></li>
 					<li><a href="#">Log In</a></li>
-					<li><a href="#">Register</a></li>
+					<li><a href="{{ url_for('register') }}">Register</a></li>
 				</ul>
 			</div>
 		</nav>
 
         <!-- mobile sidenav -->
 		<ul class="sidenav" id="mobile-demo">
-            <li><h4 class="center-align amber darken-1-text text-darken 4">Santé!</h4></li>
+            <li><h4 class="center-align amber darken-1-text text-darken-4">Santé!</h4></li>
             <li><a href="{{ url_for('get_cocktails') }}">Home</a></li>
             <li><a href="#">Profile</a></li>
             <li><a href="#">New Recipes</a></li>
             <li><a href="#">Cocktails</a></li>
             <li><a href="#">Log Out</a></li>
             <li><a href="#">Log In</a></li>
-            <li><a href="#">Register</a></li>
+            <li><a href="{{ url_for('register') }}">Register</a></li>
 		</ul>
 	</header>
 
