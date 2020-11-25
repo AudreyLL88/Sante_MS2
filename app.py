@@ -89,6 +89,11 @@ def logout():
     return redirect(url_for("login"))
 
 
+@app.route("/add_cocktail")
+def add_cocktail():
+    return render_template("add_cocktail.html")
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
