@@ -91,7 +91,8 @@ def logout():
 
 @app.route("/add_cocktail")
 def add_cocktail():
-    return render_template("add_cocktail.html")
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    return render_template("add_cocktail.html", categories=categories)
 
 
 if __name__ == "__main__":
