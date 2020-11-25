@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 
+    <h3 class="amber-text text-darken-4 center-align">All Cocktail</h3>
+
     <ul class="collapsible">
         {% for cocktail in cocktails %}
         <li>
@@ -15,6 +17,7 @@
             <div class="collapsible-body">
                 <strong>{{ cocktail.category_name }}</strong>
                 <p>{{ cocktail.cocktail_description }}</p>
+                <p><em>by: {{ cocktail.created_by }}</em></p>
             </div>
         </li>
         {% endfor %}
