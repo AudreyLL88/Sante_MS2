@@ -9,9 +9,13 @@
                 <div class="input-field col s12">
                 <i class="fas fa-folder-open prefix amber-text text-darken-4"></i>
                     <select id="category_name" name="category_name" class="validate" required>
-                        <option value="" disabled selected>Choose category</option>
+                        <option value="" disabled>Choose category</option>
                         {% for category in categories %}
-                        <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+                            {% if category.category_name == cocktail.category_name %}
+                                <option value="{{ category.category_name }}" selected>{{ category.category_name }}</option>
+                            {% else %}
+                                <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                     <label>Cocktail Category</label>
@@ -21,7 +25,7 @@
                 <div class="input-field col s12">
                     <i class="fas fa-pencil-alt prefix amber-text text-darken-4"></i>
                     <input id="cocktail_name" name="cocktail_name" minlength="5" maxlength="50"
-                        type="text" class="validate" required>
+                        value="{{ cocktail.cocktail_name }}" type="text" class="validate" required>
                     <label for="cocktail_name">Cocktail Name</label>
                 </div>
             </div>
@@ -29,15 +33,17 @@
                     <div class="input-field col s12">
                         <i class="fas fa-align-left prefix amber-text text-darken-4"></i>
                         <textarea id="cocktail_description" name="cocktail_description" minlength="5"
-                            maxlength="200" class="materialize-textarea" required></textarea>
+                            maxlength="200" class="materialize-textarea" required>
+                            {{- cocktail.cocktail_description -}}
+                            </textarea>
                         <label for="cocktail_description">Cocktail Description</label>
                     </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <i class="fas fa-calendar-alt prefix amber-text text-darken-4"></i>
-                    <input id="cocktail_date" name="cocktail_date" minlength="5" maxlength="50"
-                        type="text" class=" datepicker validate" required>
+                    <input id="cocktail_date" name="cocktail_date" minlength="5" maxlength="50" type="text" 
+                        value="{{ cocktail.cocktail_date }}" class=" datepicker validate" required>
                     <label for="cocktail_date">Made on</label>
                 </div>
             </div>
@@ -46,7 +52,11 @@
                         <div class="switch">
                             <i class="fas fa-exclamation-circle prefix amber-text text-darken-4"></i>
                             <label for="cocktail_status">
-                                <input type="checkbox" id="cocktail_status" name="cocktail_status">
+                                {% if cocktail.cocktail_status == "on" %}
+                                    <input type="checkbox" id="cocktail_status" name="cocktail_status" checked>
+                                {% else %}
+                                    <input type="checkbox" id="cocktail_status" name="cocktail_status">
+                                {% endif %}
                                 <span class="lever"></span>
                                 Done
                             </label>
@@ -55,6 +65,7 @@
                 </div>
                 <div class="row">
                     <div class="col s12 center-align">
+                        <a href="{{ url_for('get_cocktails') }}" class="btn-large red text-shadow">Cancel <i class="fas fa-times-circle right"></i></a>
                         <button type="submit" class="btn-large amber darken-1 text-shadow">
                             Edit Cocktail <i class="fas fa-edit right"></i>
                         </button>
