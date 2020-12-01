@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+   
+    <main class="l-main">
+        <section class="home">
+            <div class="home__container bd-grid">
+                <div class="home__img">
+                <img src="static/img/img1.png" alt="" data-speed="2" class="move">
+                <img src="static/img/img2.png" alt="" data-speed="2" class="move">
+                <img src="static/img/img3.png" alt="" data-speed="2" class="move">
+                <img src="static/img/img4.png" alt="" data-speed="-2" class="move">
+                <img src="static/img/img5.png" alt="" data-speed="-2" class="move">
+                <img src="static/img/img6.png" alt="" data-speed="2" class="move">
+                </div>
+                <div class="home__data">
+                    <h1 class="home__title">No Bar<br> No Problem.</h1>
+                    <p class="home__description">Join our community <br> and become your own bartender</p>
+                    <a href="#" class="home__button">Register</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+<section class="featured">
+    <div class="center">
+        <h2 class="red-text text-lighten-2">Discover our Cocktails</h2>
+        <p class="indigo-text text-darken-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mollis, mi eget dignissim accumsan, lectus dolor interdum erat, 
+        id mattis arcu ex eget orci. 
+        </p>
+    </div>
+
+{% if cocktails|length > 0 %}
+
+<div class="row">
+    {% for cocktail in cocktails %}
+    <div class="col s12 m4">
+        <div class="cocktail-card center orange lighten-5">           
+                <img class="responsive-img" src="https://cdn.pixabay.com/photo/2018/06/05/22/21/ice-cubes-3456598_960_720.jpg" alt="{{ cocktail.cocktail_name }}" />
+                <span class="center text-shadow">
+                    <h5 class="indigo-text text-darken-4">{{ cocktail.cocktail_name }}</h5>
+                    <p class="indigo-text text-darken-4"><em>{{ cocktail.category_name }}</em></p>
+                </span>
+                <a href="{{url_for('get_cocktails') }}" class="btn red lighten-2">Try it!</a>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
+
+{% else %}
+<h3 class="red-text center-align text-shadow">No Results Found</h3>
+
+{% endif %} {% endblock %}
+
+

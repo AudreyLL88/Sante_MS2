@@ -3,57 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Lobster&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
         integrity="sha512-xA6Hp6oezhjd6LiLZynuukm80f8BoZ3OpcEYaqKoCV3HKQDrYjDE1Gu8ocxgxoXmwmSzM4iqPvCsOkQNiu41GA==" crossorigin="anonymous" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" type="text/css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
     {% block styles %}
     {% endblock %}
     <title>Santé</title>
 </head>
 <body>
-    <header>
+    <header class="l-header">
         <!-- top navbar -->
-		<nav class="nav-extended text-shadow amber darken-1">
-			<div class="nav-wrapper">
-				<a href="{{ url_for('get_cocktails') }}" class="brand-logo">Santé!</a>
-				<a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
-				<ul class="right hide-on-med-and-down">
-					<li><a href="{{ url_for('get_cocktails') }}">Home</a></li>
+		<nav class="nav bd-grid">
+            <div>
+                <a href="{{ url_for('get_cocktails') }}" class="nav__logo">Santé!</a>
+            </div>
+            <div class="nav__toggle" id="nav-toggle">
+                <i class="fas fa-bars red-text text-lighten-2"></i>
+            </div>
+            <div class="nav__menu" id="nav-menu">
+                <div class="nav__close" id="nav-close">
+                    <i class="fas fa-times"></i>
+                </div>
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="{{ url_for('index') }}" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="{{ url_for('get_cocktails') }}" class="nav__link">Recipes</a></li>
                     {% if session.user %}
-                        <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
-                        <li><a href="{{ url_for('add_cocktail') }}">New recipes</a></li>
+                        <li class="nav__item"><a href="{{ url_for('profile', username=session['user']) }}" class="nav__link">Profile</a></li>
+                        <li class="nav__item"><a href="{{ url_for('add_cocktail') }}" class="nav__link">New Recipes</a></li>
                         {% if session.user|lower == "admin"|lower %}
-                            <li><a href="{{ url_for('get_categories') }}">Cocktails</a></li>
+                        <li class="nav__item"><a href="{{ url_for('get_categories') }}" class="nav__link">Cocktails</a></li>
                         {% endif %}
-                        <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                        <li class="nav__item"><a href="{{ url_for('logout') }}" class="nav__link">Log Out</a></li>
                     {% else %}
-                        <li><a href="{{ url_for('login') }}">Log In</a></li>
-                        <li><a href="{{ url_for('register') }}">Register</a></li>
+                        <li class="nav__item"><a href="{{ url_for('login') }}" class="nav__link">Log In</a></li>
+                        <li class="nav__item"><a href="{{ url_for('register') }}" class="nav__link">Register</a></li>
                     {% endif %}
-				</ul>
-			</div>
-		</nav>
-
-        <!-- mobile sidenav -->
-		<ul class="sidenav" id="mobile-demo">
-            <li><h4 class="center-align amber darken-1-text text-darken-4">Santé!</h4></li>
-            <li><a href="{{ url_for('get_cocktails') }}">Home</a></li>
-            {% if session.user %}
-                <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
-                <li><a href="{{ url_for('add_cocktail') }}">New Recipes</a></li>
-                {% if session.user|lower == "admin"|lower %}
-                    <li><a href="{{ url_for('get_categories') }}">Cocktails</a></li>
-                {% endif %}
-                <li><a href="{{ url_for('logout') }}">Log Out</a></li>
-            {% else %}
-                <li><a href="{{ url_for('login') }}">Log In</a></li>
-                <li><a href="{{ url_for('register') }}">Register</a></li>
-            {% endif %}
-		</ul>
+                </ul>
+            </div>
+        </nav>
 	</header>
 
-    <section>
+
+
+    <main class="container">
+    {% block content %}
+    {% endblock %}
+    </main>
+
+       <section>
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 {% for message in messages %}
@@ -65,15 +63,33 @@
         {% endwith %}
     </section>
 
-    <main class="container">
-    {% block content %}
-    {% endblock %}
-    </main>
+    <footer class="page-footer indigo darken-4">
+          <div class="container">
+            <div class="row">
+              <div class="input-field col l4 s12">
+                <h4 class="orange-text text-lighten-5">Subscribe to our fresh newsletter!</h4>
+                         <input id="email" name="email" type="text" minlength="5" maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" class="validate"  placeholder="user@example.com" required>
+                        <a href="{{url_for('register') }}" class="btn red lighten-2 valign">Subscribe</a>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h4 class="orange-text text-lighten-5">Social Media</h4>
+                <ul class="social-media">
+                  <li><a class="orange-text text-lighten-5" href="#!"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                  <li><a class="orange-text text-lighten-5" href="#!"><i class="fab fa-pinterest"></i></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="footer-copyright center">
+            <div class="container">
+            © 2020 Audrey Lloancy
+            </div>
+          </div>
+        </footer>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
-        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js" integrity="sha512-IQLehpLoVS4fNzl7IfH8Iowfm5+RiMGtHykgZJl9AWMgqx0AmJ6cRWcB+GaGVtIsnC4voMfm8f2vwtY+6oPjpQ==" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     {% block scripts %}
     {% endblock %}
 </body>
