@@ -18,7 +18,12 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 
-@app.route("/")
+@app.route('/')
+def index():
+    cocktails = list(mongo.db.cocktails.find())
+    return render_template("index.html", cocktails=cocktails)
+    
+
 @app.route("/get_cocktails")
 def get_cocktails():
     cocktails = list(mongo.db.cocktails.find())
