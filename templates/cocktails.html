@@ -1,56 +1,51 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <h3 class="amber-text text-darken-4 center-align">All Cocktail</h3>
-
-    <div class="row card-panel light-grey lighten-5">
-        <form action="{{ url_for('search') }}" method="post" class="col s12">
-            <div class="row valign-wrapper center-align">
-                <div class="input-field col s12 m8">
-                    <i class="fas fa-search prefix amber-text text-darken-4"></i>
-                    <input type="text" name="query" id="query" minlength="3" class="validate" required>
+<div class="wrap">
+<div class="all__cocktail">
+    <div class="text-center pb-3">
+        <h2 class="header__cocktail">All Our Cocktails</h2>
+    </div>
+    <div class="row card card-sm center mt-5">
+        <form action="{{ url_for('search') }}" method="post" class="card-body row no-gutters align-items-center col-12">
+                <div class="col-auto text-center mt-5">
+                    <input type="search" name="query" id="query" minlength="3" class="form-control form-control-lg form-control-borderless" required>
                     <label for="query">Search Cocktail</label>
                 </div>
-                <div class="col s12 m4">
-                    <a href="{{ url_for('get_cocktails') }}" class="red btn text-shadow">Reset</a>
-                    <button type="submit" class="amber darken-1 btn text-shadow">
+                <div class="col-auto">
+                    <a href="{{ url_for('get_cocktails') }}" class="amber accent-3 btn text-shadow">Reset</a>
+                    <button type="submit" class="btn btn-lg btn-success">
                         <i class="fas fa-search left"></i>Search
                     </button>
                 </div>
-            </div>
         </form>
-    </div>
-
+    </div>    
     {% if cocktails|length > 0 %}
-    <ul class="collapsible">
+        <div class="row">
         {% for cocktail in cocktails %}
-        <li>
-            <div class="collapsible-header white-text amber darken-4 text-shadow">
-                <div class="col s3">
-                    <i class="fas fa-caret-down"></i>
-                    {% if session.user|lower == cocktail.created_by|lower %}
-                        <a  href="{{ url_for('delete_cocktail', cocktail_id=cocktail._id)}}" class="btn-small green accent-4">Delete</a>
-                        <a  href="{{ url_for('edit_cocktail', cocktail_id=cocktail._id)}}" class="btn-small amber">Edit</a>
+                <div class="col-sm-6 col-md-4">
+                    <div class="card">
+                            <div class="all__img"
+                                style="background-image: url('https://cdn.pixabay.com/photo/2018/06/05/22/21/ice-cubes-3456598_960_720.jpg')">
+                            </div>
+                            <div class="card-body">
+                              <h5 class="">{{ cocktail.cocktail_name }}</h5>
+                              <h6 class="card-subtitle mb-2 text-muted">{{ cocktail.cocktail_description }}</h6>
+                              {% if session.user|lower == cocktail.created_by|lower %}
+                        <a  href="{{ url_for('delete_cocktail', cocktail_id=cocktail._id)}}" class="btn btn-danger">Delete</a>
+                        <a  href="{{ url_for('edit_cocktail', cocktail_id=cocktail._id)}}" class="btn btn-success">Edit</a>
                     {% endif %}
+                        <a  href="{{url_for('get_cocktails', cocktail_id=cocktail._id)}}" class="btn btn-primary">Try</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col s9">
-                    <strong>{{ cocktail.cocktail_name }}</strong> : {{ cocktail.cocktail_date }}
-                    {% if cocktail.cocktail_status == "on" %}
-                        <i class="fas fa-exclamation circle amber-text lighten-2 tooltipped"
-                            data-position="bottom" data-tooltip="URGENT"></i>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="collapsible-body">
-                <strong>{{ cocktail.category_name }}</strong>
-                <p>{{ cocktail.cocktail_description }}</p>
-                <p><em>by: {{ cocktail.created_by }}</em></p>
-            </div>
-        </li>
         {% endfor %}
-  </ul>
-  {% else %}
-        <h3 class="red-text text-darken-4 center-align">No Results Found</h3>
-  {% endif %}      
+        {% else %}
+            <h3 class="text-center">No Results Found</h3>
+        </div>
+</div>
+</div>
+ 
+{% endif %} {% endblock %}
 
-{% endblock %}
+
